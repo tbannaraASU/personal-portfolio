@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Capstone Milestone Tracker</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 48px auto; padding: 0 24px; color: #192338; background: #f4f7fb; }
+    main { background: white; padding: 32px; border-radius: 14px; box-shadow: 0 5px 22px #dce4ee; }
+    h1 { margin-top: 0; }
+    li { padding: 12px 8px; border-bottom: 1px solid #e2e8f0; list-style: none; }
+    ul { padding: 0; }
+    label { cursor: pointer; }
+    input { margin-right: 12px; }
+    .hint { color: #52627d; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>My Capstone Milestone Tracker</h1>
+    <p class="hint">Replace this sentence with the goal of YOUR own capstone project.</p>
+    <h2>Project milestones</h2>
+    <ul id="milestones">
+      <li><label><input type="checkbox">Define project goals (CUSTOMIZE ME)</label></li>
+      <li><label><input type="checkbox">Build a first prototype (CUSTOMIZE ME)</label></li>
+      <li><label><input type="checkbox">Test with users (CUSTOMIZE ME)</label></li>
+      <li><label><input type="checkbox">Prepare final presentation (CUSTOMIZE ME)</label></li>
+    </ul>
+    <p id="progress" aria-live="polite">Progress: feature not implemented yet</p>
+    <!-- YOUR TASK ON A FEATURE BRANCH:
+         Add a JavaScript function to count checked milestones.
+         Update the #progress text to show completed / total and %.
+         BONUS: Save checkbox state after refreshing the browser.
+    -->
+  </main>
+</body>
+</html>
