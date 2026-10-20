@@ -3,141 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal portfolio of Than Bannarat: computer science, projects, skills, and photography.">
+  <meta name="theme-color" content="#fff9f4">
   <title>Than Bannarat | Portfolio</title>
   <style>
+    :root {
+      color-scheme: light;
+      --background: #fff9f4;
+      --surface: #ffffff;
+      --surface-alt: #fff0e3;
+      --text: #282330;
+      --muted: #655f6d;
+      --accent: #a64534;
+      --accent-dark: #7e3226;
+      --line: #eadbd3;
+      --shadow: 0 16px 38px rgba(73, 44, 39, 0.08);
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #1c1b24;
+      --surface: #282632;
+      --surface-alt: #382a2d;
+      --text: #f8eee9;
+      --muted: #c7b8b4;
+      --accent: #ffb599;
+      --accent-dark: #ffd2bd;
+      --line: #4b424d;
+      --shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
+    }
     * { box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f7fb;
-      color: #192338;
-      line-height: 1.6;
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--background); color: var(--text); font: 16px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    a { color: inherit; }
+    button { font: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    .shell { max-width: 1120px; padding: 0 24px; margin: 0 auto; }
+    .topbar { position: sticky; top: 0; z-index: 20; background: var(--background); border-bottom: 1px solid var(--line); }
+    .nav-inner { min-height: 76px; display: flex; align-items: center; gap: 24px; }
+    .brand { font-weight: 800; font-size: 1.15rem; text-decoration: none; letter-spacing: -0.04em; margin-right: auto; }
+    .brand span { color: var(--accent); }
+    nav { display: flex; gap: 22px; }
+    nav a { text-decoration: none; color: var(--muted); font-weight: 650; font-size: .9rem; }
+    nav a:hover { color: var(--accent); }
+    .theme-button { cursor: pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 100px; padding: 8px 13px; color: var(--text); font-weight: 700; font-size: .85rem; white-space: nowrap; }
+    .theme-button:hover { background: var(--surface-alt); }
+    .hero { padding: 88px 0 68px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 70px; align-items: center; }
+    .eyebrow { color: var(--accent); font-weight: 800; font-size: .78rem; text-transform: uppercase; letter-spacing: .13em; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.7rem, 6vw, 5rem); line-height: 1.08; letter-spacing: -.065em; margin: 16px 0 22px; }
+    h1 em { font-style: normal; color: var(--accent); }
+    .lead { font-size: 1.13rem; max-width: 590px; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; padding: 12px 20px; font-size: .95rem; font-weight: 750; text-decoration: none; transition: transform .15s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { background: var(--accent); color: var(--background); }
+    .button-secondary { border: 1px solid var(--line); background: var(--surface); }
+    .hero-card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 28px; }
+    .profile-circle { display: grid; place-items: center; background: linear-gradient(135deg, #ffe0cc, #f5a98b); color: #683329; width: 100%; aspect-ratio: 1.45; border-radius: 18px; font-size: clamp(3rem, 9vw, 5rem); font-weight: 800; letter-spacing: -.08em; }
+    .card-label { color: var(--muted); font-size: .75rem; margin: 18px 0 4px; text-transform: uppercase; letter-spacing: .09em; font-weight: 750; }
+    .card-title { margin-bottom: 6px; font-size: 1.18rem; }
+    .card-detail { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+    .section { padding: 38px 0 62px; scroll-margin-top: 100px; }
+    .section-head { max-width: 760px; margin-bottom: 26px; }
+    .section h2 { font-size: clamp(1.9rem, 4vw, 2.5rem); letter-spacing: -.04em; line-height: 1.2; margin: 8px 0 12px; }
+    .section-description { color: var(--muted); }
+    .panel { background: var(--surface); border: 1px solid var(--line); padding: 30px; border-radius: 20px; box-shadow: var(--shadow); }
+    .about-grid { display: grid; grid-template-columns: 1.45fr .55fr; gap: 24px; }
+    .about-grid p:last-child { margin-bottom: 0; }
+    .quick-facts { background: var(--surface-alt); padding: 24px; border-radius: 20px; }
+    .fact { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .fact:last-child { padding-bottom: 0; margin-bottom: 0; border: 0; }
+    .fact small { display: block; color: var(--muted); font-size: .78rem; }
+    .fact strong { font-size: .94rem; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill { padding: 9px 16px; border-radius: 99px; background: var(--surface-alt); border: 1px solid var(--line); font-weight: 700; font-size: .92rem; }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .project-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+    .project-banner { min-height: 150px; padding: 24px; display: flex; align-items: flex-end; background: linear-gradient(130deg, #ffc7ae, #ffece1); color: #542f29; font-size: 2.2rem; font-weight: 850; letter-spacing: -.05em; }
+    .project-banner.alt { background: linear-gradient(130deg, #e8d5d3, #fff0df); }
+    .project-body { padding: 25px; display: flex; flex-direction: column; flex: 1; }
+    .status { align-self: flex-start; font-size: .72rem; letter-spacing: .07em; font-weight: 800; color: var(--accent-dark); background: var(--surface-alt); padding: 5px 11px; border-radius: 99px; margin-bottom: 14px; text-transform: uppercase; }
+    .project-body h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .project-body p { color: var(--muted); }
+    .project-body a { margin-top: auto; font-weight: 750; color: var(--accent-dark); text-underline-offset: 4px; }
+    .project-body a:hover { color: var(--accent); }
+    .interests-panel { display: flex; align-items: center; gap: 24px; }
+    .camera-icon { width: 86px; height: 86px; flex-shrink: 0; display: grid; place-items: center; font-size: 2.5rem; border-radius: 18px; background: var(--surface-alt); }
+    .interests-panel p { color: var(--muted); margin: 0; }
+    .contact-panel { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .contact-panel p { margin-bottom: 0; color: var(--muted); }
+    .footer { margin-top: 24px; padding: 24px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+    .footer .shell { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; gap: 28px; padding: 62px 0 46px; }
+      .hero-card { max-width: 520px; }
+      .about-grid, .projects-grid { grid-template-columns: 1fr; }
+      .contact-panel { align-items: flex-start; flex-direction: column; }
     }
-    header {
-      background: peachpuff;
-      color: black;
-      text-align: center;
-      padding: 65px 20px;
+    @media (max-width: 620px) {
+      .shell { padding: 0 18px; }
+      .nav-inner { flex-wrap: wrap; gap: 12px; padding: 14px 0; }
+      nav { order: 3; flex-basis: 100%; justify-content: space-between; gap: 8px; overflow-x: auto; }
+      nav a { font-size: .82rem; }
+      .hero { padding-top: 45px; }
+      .panel { padding: 22px; }
+      .section { padding-bottom: 42px; }
+      .interests-panel { align-items: flex-start; flex-direction: column; }
     }
-       header h1 {
-      font-size: 40px;
-      margin-bottom: 8px;
-    }
-    nav {
-      margin-top: 25px;
-    }
-    nav a {
-      color: black;
-      text-decoration: none;
-      margin: 0 12px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    main {
-      max-width: 850px;
-      margin: 35px auto;
-      padding: 0 20px;
-    }
-    section {
-      background: white;
-      padding: 30px;
-      margin-bottom: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px #dce4ee;
-    }
-    h2 {
-      color: #172b4d;
-    }
-    .skills {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .skill {
-      background: peachpuff;
-      padding: 8px 15px;
-      border-radius: 20px;
-    }
-    .project {
-      border-left: 4px solid peachpuff;
-      padding-left: 16px;
-      margin-top: 20px;
-    }
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #52627d;
-    }
-    @media (max-width: 600px) {
-      header h1 { font-size: 30px; }
-      nav a { margin: 0 6px; }
-    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Than Bannarat</h1>
-    <p>Senior at Arizona State University</p>
-    <p>Computer Scientist with Passion in Photography</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <div class="topbar">
+    <div class="shell nav-inner">
+      <a class="brand" href="#home" aria-label="Than Bannarat, back to top">than<span>.</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#interests">Photography</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">☾ Dark mode</button>
+    </div>
+  </div>
+
   <main>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>
-        Hello! My name is Than Bannarat.
-        I am a student at Arizona State University.
-        This website introduces my background,
-        technical skills, and academic projects.
-      </p>
-    </section>
-    <section id="skills">
-      <h2>My Skills</h2>
-      <div class="skills">
-        <!-- Replace with skills you actually have -->
-        <span class="skill">HTML</span>
-        <span class="skill">Java</span>
-        <span class="skill">C++</span>
-        <span class="skill">Python</span>
-        <span class="skill">SQL</span>
-        <span class="skill">CSS</span>
-        <span class="skill">Git</span>
-        <span class="skill">GitHub</span>
+    <header class="shell hero" id="home">
+      <div>
+        <div class="eyebrow">Personal portfolio · Arizona State University</div>
+        <h1>Hi, I'm <em>Than.</em></h1>
+        <p class="lead">Computer science student, builder, and photography enthusiast. I enjoy exploring ideas through code and through a camera lens.</p>
+        <div class="actions">
+          <a class="button button-primary" href="#projects">Explore my work ↗</a>
+          <a class="button button-secondary" href="https://github.com/tbannaraASU" target="_blank" rel="noopener noreferrer">GitHub profile ↗</a>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="Profile information">
+        <div class="profile-circle" role="img" aria-label="TB initials graphic">TB<span style="font-size: .45em; align-self: end; margin-bottom: 30px;">✳</span></div>
+        <p class="card-label">Currently</p>
+        <h2 class="card-title">Senior at Arizona State University</h2>
+        <p class="card-detail">Computer science &amp; photography</p>
+      </div>
+    </header>
+
+    <section class="shell section" id="about">
+      <div class="section-head"><div class="eyebrow">01 / Introduction</div><h2>About me</h2></div>
+      <div class="about-grid">
+        <div class="panel">
+          <p>Hi! My name is <strong>Than Bannarat</strong>. I'm a senior at Arizona State University with an interest in computer science and photography.</p>
+          <p>I created this website to share my technical skills, personal projects, and interests. I'm continuing to improve it as I learn new tools and build new things.</p>
+        </div>
+        <div class="quick-facts" aria-label="Quick facts">
+          <div class="fact"><small>University</small><strong>Arizona State University</strong></div>
+          <div class="fact"><small>Focus</small><strong>Computer science</strong></div>
+          <div class="fact"><small>Creative interest</small><strong>Photography</strong></div>
+        </div>
       </div>
     </section>
-    <section id="projects">
-      <h2>My Projects</h2>
-      <div class="project">
-        <h3>Personal Portfolio Website</h3>
-        <p>
-          A personal website created with HTML
-          and CSS to showcase my background
-          and projects.
-        </p>
-      </div>
-      <div class="project">
-        <h3>Capstone Project</h3>
-        <p>
-          Add a description of your actual
-          capstone project here.
-        </p>
+
+    <section class="shell section" id="skills">
+      <div class="section-head"><div class="eyebrow">02 / Toolkit</div><h2>My skills</h2><p class="section-description">Programming languages and tools I have listed in my portfolio.</p></div>
+      <div class="panel"><div class="skill-list">
+        <span class="skill">HTML</span><span class="skill">CSS</span><span class="skill">Java</span><span class="skill">C++</span>
+        <span class="skill">Python</span><span class="skill">SQL</span><span class="skill">Git</span><span class="skill">GitHub</span>
+      </div></div>
+    </section>
+
+    <section class="shell section" id="projects">
+      <div class="section-head"><div class="eyebrow">03 / Selected work</div><h2>Projects</h2><p class="section-description">A place for work I've built and projects I'll add as they become ready to share.</p></div>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-banner" aria-hidden="true">&lt;/&gt; Portfolio</div>
+          <div class="project-body">
+            <span class="status">Personal project</span>
+            <h3>Personal Portfolio Website</h3>
+            <p>A responsive HTML, CSS, and JavaScript portfolio. I use Git branches, commits, and pull requests to track the changes as I improve it.</p>
+            <a href="https://github.com/tbannaraASU/personal-portfolio" target="_blank" rel="noopener noreferrer">View GitHub repository ↗</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-banner alt" aria-hidden="true">Next project →</div>
+          <div class="project-body">
+            <span class="status">Details to come</span>
+            <h3>Capstone Project</h3>
+            <p>I'll add an overview, my contribution, technologies, and a link when I'm ready to share accurate details about this project.</p>
+            <a href="#contact">Get in touch ↗</a>
+          </div>
+        </article>
       </div>
     </section>
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: bannathan8@gmail.com</p>
-      <p>GitHub: tbannaraASU</p>
+
+    <section class="shell section" id="interests">
+      <div class="section-head"><div class="eyebrow">04 / Beyond code</div><h2>Photography</h2></div>
+      <div class="panel interests-panel">
+        <div class="camera-icon" aria-hidden="true">📷</div>
+        <div>
+          <h3>Curiosity in every frame</h3>
+          <p>Photography is one of my personal interests. This space can grow into a gallery of my own photos as I develop my portfolio further.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="contact">
+      <div class="section-head"><div class="eyebrow">05 / Connect</div><h2>Let's connect</h2></div>
+      <div class="panel contact-panel">
+        <div><h3>Have a question or want to connect?</h3><p>Reach out by email or take a look at my GitHub projects.</p></div>
+        <div class="actions">
+          <a class="button button-primary" href="mailto:bannathan8@gmail.com">Send email ↗</a>
+          <a class="button button-secondary" href="https://github.com/tbannaraASU" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </div>
+      </div>
     </section>
   </main>
-  <footer>
-    <p>© 2026 Than Bannarat</p>
-  </footer>
+
+  <footer class="footer"><div class="shell"><span>© <span id="year">2026</span> Than Bannarat</span><span>Built with HTML, CSS &amp; JavaScript · Updated with Git</span></div></footer>
+  <script>
+    // Interactive feature: switch between light and dark themes.
+    const root = document.documentElement;
+    const themeButton = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('portfolio-theme');
+
+    function applyTheme(theme) {
+      const dark = theme === 'dark';
+      root.dataset.theme = dark ? 'dark' : 'light';
+      themeButton.textContent = dark ? '☀ Light mode' : '☾ Dark mode';
+      themeButton.setAttribute('aria-pressed', String(dark));
+      themeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+
+    themeButton.addEventListener('click', () => {
+      const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      localStorage.setItem('portfolio-theme', nextTheme);
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-

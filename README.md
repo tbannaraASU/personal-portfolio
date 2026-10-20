@@ -1,27 +1,35 @@
-# Capstone Milestone Tracker - LEARNING STARTER
+# Personal Portfolio — Than Bannarat
 
-This is a minimal practice scaffold, NOT a finished submission. The assignment asks for a unique work product, so you must personalize and develop it yourself.
+A personal portfolio website featuring information about me, my technical skills, projects, and an interest in photography.
 
-## Your tasks
-1. Change the title, description, milestones, and design to match YOUR project.
-2. Test the page by opening `index.html` in a browser.
-3. Commit your personalized first version using Git.
-4. Create a branch called `feature/progress-counter`.
-5. Add an interactive progress counter **yourself** (completed / total and a percentage). Consider including a progress bar.
-6. Commit the new feature, push the branch, and create a pull request on GitHub.
-7. Merge the pull request and write your own README about your implementation.
-8. Add optional unique enhancements (a deadline, priority labels, a custom color scheme, a clear-all button, or local storage).
+## Built with
 
-## Learning evidence
-- Screenshot of YOUR finished tracker.
-- Screenshot of YOUR GitHub commit history.
-- Screenshot of YOUR merged pull request.
-- Link to YOUR GitHub repository.
+- HTML
+- CSS (responsive layout)
+- JavaScript (light/dark theme toggle, saved in browser storage)
+- Git and GitHub for version control
 
-## Suggested commit messages
-- `docs: describe my capstone milestone tracker`
-- `feat: customize milestones for my project`
-- `feat: calculate completed milestone percentage`
-- `docs: explain branching and pull request workflow`
+## Run locally
 
-**Important:** Commit messages are examples, not evidence that these actions occurred. Do not claim features, time, or challenges you did not actually complete.
+Open `index.html` in Chrome or Safari. No installation or server is required.
+
+## Portfolio sections
+
+- About me
+- Skills
+- Projects (with a link to this GitHub repository)
+- Photography
+- Contact
+
+## Improvements to make next
+
+- Replace the Capstone placeholder with accurate project details, when ready
+- Add my own photography images and descriptions
+- Expand the project section with completed projects
+- Check accessibility, mobile layout, and links
+
+## Version control workflow
+
+Develop changes on a feature branch, make descriptive commits, push to GitHub, and open a pull request to merge into `main`.
+
+Repository: https://github.com/tbannaraASU/personal-portfolio
