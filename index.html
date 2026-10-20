@@ -3,35 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Capstone Milestone Tracker</title>
+  <title>Than Bannarat | Portfolio</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 760px; margin: 48px auto; padding: 0 24px; color: #192338; background: #f4f7fb; }
-    main { background: white; padding: 32px; border-radius: 14px; box-shadow: 0 5px 22px #dce4ee; }
-    h1 { margin-top: 0; }
-    li { padding: 12px 8px; border-bottom: 1px solid #e2e8f0; list-style: none; }
-    ul { padding: 0; }
-    label { cursor: pointer; }
-    input { margin-right: 12px; }
-    .hint { color: #52627d; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f7fb;
+      color: #192338;
+      line-height: 1.6;
+    }
+    header {
+      background: peachpuff;
+      color: black;
+      text-align: center;
+      padding: 65px 20px;
+    }
+       header h1 {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+    nav {
+      margin-top: 25px;
+    }
+    nav a {
+      color: black;
+      text-decoration: none;
+      margin: 0 12px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 850px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+    section {
+      background: white;
+      padding: 30px;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px #dce4ee;
+    }
+    h2 {
+      color: #172b4d;
+    }
+    .skills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .skill {
+      background: peachpuff;
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+    .project {
+      border-left: 4px solid peachpuff;
+      padding-left: 16px;
+      margin-top: 20px;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #52627d;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 30px; }
+      nav a { margin: 0 6px; }
+    }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Than Bannarat</h1>
+    <p>Senior at Arizona State University</p>
+    <p>Computer Scientist with Passion in Photography</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
   <main>
-    <h1>My Capstone Milestone Tracker</h1>
-    <p class="hint">Replace this sentence with the goal of YOUR own capstone project.</p>
-    <h2>Project milestones</h2>
-    <ul id="milestones">
-      <li><label><input type="checkbox">Define project goals (CUSTOMIZE ME)</label></li>
-      <li><label><input type="checkbox">Build a first prototype (CUSTOMIZE ME)</label></li>
-      <li><label><input type="checkbox">Test with users (CUSTOMIZE ME)</label></li>
-      <li><label><input type="checkbox">Prepare final presentation (CUSTOMIZE ME)</label></li>
-    </ul>
-    <p id="progress" aria-live="polite">Progress: feature not implemented yet</p>
-    <!-- YOUR TASK ON A FEATURE BRANCH:
-         Add a JavaScript function to count checked milestones.
-         Update the #progress text to show completed / total and %.
-         BONUS: Save checkbox state after refreshing the browser.
-    -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        Hello! My name is Than Bannarat.
+        I am a student at Arizona State University.
+        This website introduces my background,
+        technical skills, and academic projects.
+      </p>
+    </section>
+    <section id="skills">
+      <h2>My Skills</h2>
+      <div class="skills">
+        <!-- Replace with skills you actually have -->
+        <span class="skill">HTML</span>
+        <span class="skill">Java</span>
+        <span class="skill">C++</span>
+        <span class="skill">Python</span>
+        <span class="skill">SQL</span>
+        <span class="skill">CSS</span>
+        <span class="skill">Git</span>
+        <span class="skill">GitHub</span>
+      </div>
+    </section>
+    <section id="projects">
+      <h2>My Projects</h2>
+      <div class="project">
+        <h3>Personal Portfolio Website</h3>
+        <p>
+          A personal website created with HTML
+          and CSS to showcase my background
+          and projects.
+        </p>
+      </div>
+      <div class="project">
+        <h3>Capstone Project</h3>
+        <p>
+          Add a description of your actual
+          capstone project here.
+        </p>
+      </div>
+    </section>
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: bannathan8@gmail.com</p>
+      <p>GitHub: tbannaraASU</p>
+    </section>
   </main>
+  <footer>
+    <p>© 2026 Than Bannarat</p>
+  </footer>
 </body>
 </html>
+
