@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Photo stories by Than Bannarat, grouped by original Instagram hashtags.">
+  <title>Photography | Than Bannarat</title>
+  <link rel="stylesheet" href="photography.css">
+</head>
+<body>
+  <a class="skip-link" href="#gallery">Skip to photo gallery</a>
+  <header class="topbar">
+    <div class="shell nav-inner">
+      <a class="brand" href="index.html">than<span>.</span></a>
+      <nav aria-label="Photography navigation">
+        <a href="index.html">← Portfolio</a>
+        <a href="#gallery">Collections</a>
+        <a href="https://www.instagram.com/foto_4th/" target="_blank" rel="noopener noreferrer">@foto_4th ↗</a>
+      </nav>
+      <button id="theme-toggle" class="theme-button" type="button" aria-pressed="false" aria-label="Switch to dark mode">☾ Dark mode</button>
+    </div>
+  </header>
+  <main>
+    <div class="shell hero">
+      <div class="hero-copy">
+        <div class="eyebrow">GoOutToCapture · @foto_4th</div>
+        <h1>Stories through<br><em>a lens.</em></h1>
+        <p>Exploring moments through photography. My photo sets are organized by the hashtags used in their original Instagram captions.</p>
+        <div class="actions">
+          <a class="button primary" href="#gallery">Explore collections ↓</a>
+          <a class="button secondary" href="https://www.instagram.com/foto_4th/" target="_blank" rel="noopener noreferrer">Visit Instagram ↗</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="frame frame-one"></div><div class="frame frame-two"></div><span class="art-label">Photo journal / Collections</span></div>
+    </div>
+
+    <section class="shell gallery-section" id="gallery" aria-labelledby="gallery-title">
+      <div class="section-head">
+        <div><p class="eyebrow">Photography / Collections</p><h2 id="gallery-title">Explore photo sets</h2><p class="muted">A photo set is an Instagram post, including every image in a carousel. One set can belong to multiple hashtag collections.</p></div>
+        <span id="gallery-count" class="small-pill" role="status" aria-live="polite">Loading gallery…</span>
+      </div>
+      <div class="toolbar">
+        <div class="search-wrap"><label for="search">Search photos and captions</label><input type="search" id="search" placeholder="Search captions or #hashtags…" autocomplete="off"></div>
+        <fieldset class="view-toggle"><legend>View as</legend><label><input type="radio" name="view" value="groups" checked> Collections</label><label><input type="radio" name="view" value="all"> All photo sets</label></fieldset>
+      </div>
+      <div id="tag-filters" class="filters" role="group" aria-label="Filter by hashtag"></div>
+      <div id="gallery-content" aria-live="polite"><div class="empty-state">Preparing collections…</div></div>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell footer-inner"><span>© <span id="year">2026</span> Than Bannarat</span><span>Original photography · <a href="index.html">Back to portfolio</a></span></div></footer>
+
+  <dialog id="photo-dialog" class="viewer" aria-label="Photo viewer">
+    <div class="viewer-bar"><div><strong id="viewer-title">Photo set</strong><small id="viewer-caption"></small></div><button id="viewer-close" type="button" aria-label="Close photo viewer">✕ Close</button></div>
+    <div class="viewer-image-wrap"><img id="viewer-image" alt=""></div>
+    <div class="viewer-bottom"><button id="viewer-prev" type="button">← Previous</button><span id="viewer-count" role="status"></span><button id="viewer-next" type="button">Next →</button></div>
+    <p class="viewer-link"><a id="viewer-post-link" href="https://www.instagram.com/foto_4th/" target="_blank" rel="noopener noreferrer">View on Instagram ↗</a></p>
+  </dialog>
+  <!-- Automatically generated from your LOCAL SQLite data, not fetched from Instagram. -->
+  <script src="data/gallery-data.js"></script>
+  <script src="photography.js"></script>
+</body>
+</html>
