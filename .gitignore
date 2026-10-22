@@ -1,0 +1,21 @@
+
+.venv/
+.DS_Store
+local/
+photos.zip
+__pycache__/
+*.pyc
+
+# Private files
+*.sqlite
+*.sqlite-*
+*.zip
+.env
+.env.*
+
+# Private files
+*.sqlite
+*.sqlite-*
+*.zip
+.env
+.env.*

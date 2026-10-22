@@ -127,6 +127,20 @@
     @media (max-width: 770px) { .hero { grid-template-columns: 1fr; padding: 60px 0 42px; } .hero-card { max-width: 500px; } .about-grid, .projects-grid, .timeline { grid-template-columns: 1fr; } .skill-grid { grid-template-columns: 1fr; } .contact-panel { align-items: flex-start; flex-direction: column; } }
     @media (max-width: 520px) { .shell { width: min(100% - 36px, 1140px); } nav { gap: 8px 14px; flex-wrap: wrap; overflow: visible; } nav a { font-size: .8rem; } .hero { padding-top: 42px; } .section { padding-bottom: 38px; } .panel { padding: 22px; } .interests-panel { flex-direction: column; align-items: flex-start; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
+
+    .multiline { white-space: pre-line; }
+    .project-card { cursor:pointer; transition:transform .15s ease,box-shadow .15s ease; }
+    .project-card:hover { transform:translateY(-3px); box-shadow:0 17px 38px #4b28221f; }
+    .project-open { cursor:pointer; text-align:left; border:0; background:transparent; padding:9px 0 0; color:var(--accent-dark); font-size:.94rem; font-weight:800; text-decoration:underline; text-underline-offset:4px; margin-top:13px; }
+    .project-open:hover { color:var(--accent); }
+    .project-dialog { width:min(620px,calc(100% - 32px)); max-height:min(84vh,900px); color:var(--text); background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:32px; box-shadow:0 18px 95px #0006; }
+    .project-dialog::backdrop { background:rgba(21,16,24,.7); }
+    .project-dialog h2 { font-size:clamp(1.5rem,4vw,2.1rem); line-height:1.16; margin:14px 0 7px; }
+    .project-dialog h3 { margin:22px 0 6px; }
+    .project-dialog p { color:var(--muted); }
+    .project-dialog .project-dialog-sub { font-size:.85rem; }
+    .dialog-close { display:block; margin-left:auto; border:1px solid var(--line); color:var(--text); background:var(--surface-alt); padding:8px 12px; border-radius:12px; cursor:pointer; }
+    @media (max-width:700px) { .project-dialog { padding:22px; } }
   </style>
 </head>
 <body>
@@ -134,225 +148,18 @@
   <div class="topbar">
     <div class="shell nav-inner">
       <a class="brand" href="#home" aria-label="Than Bannarat, back to top">than<span>.</span></a>
-      <nav aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
+      <nav id="main-nav" aria-label="Main navigation">
         <a href="photography.html">Photography ↗</a>
-        <a href="#contact">Contact</a>
       </nav>
       <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">☾ Dark mode</button>
     </div>
   </div>
 
-  <main id="main">
-    <header class="shell hero" id="home">
-      <div>
-        <div class="eyebrow">Computer Science · Arizona State University</div>
-        <h1>Hi, I'm <em>Than.</em></h1>
-        <p class="lead">I build and improve user-focused software, with interests in accessibility, responsible AI research, and thoughtful design. Outside of code, I enjoy photography.</p>
-        <div class="mini-row">
-          <span class="mini-pill">B.S. expected May 2027</span>
-          <span class="mini-pill">Software · Accessibility · AI</span>
-        </div>
-        <div class="actions">
-          <a class="button button-primary" href="#projects">Explore my projects ↗</a>
-          <a class="button button-secondary" href="https://github.com/tbannaraASU" target="_blank" rel="noopener noreferrer">GitHub profile ↗</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="profile-art" role="img" aria-label="TB initials on a peach gradient">TB ✳</div>
-        <p class="card-label">Currently learning &amp; building</p>
-        <h2>Computer Science at ASU</h2>
-        <p>Exploring personal AI with ChatGPT while contributing to software and research projects.</p>
-      </div>
-    </header>
+  <main id="main"><div class="shell section">Loading portfolio…</div></main>
+  <dialog id="project-modal" class="project-dialog" aria-labelledby="project-dialog-title"><button id="project-close" class="dialog-close" type="button" aria-label="Close project details">✕ Close</button><div id="project-modal-content"></div></dialog>
 
-    <section class="shell section" id="about">
-      <div class="section-head"><div class="eyebrow">01 / Introduction</div><h2>About me</h2></div>
-      <div class="about-grid">
-        <div class="panel">
-          <p>I'm <strong>Than Bannarat</strong>, a senior Computer Science student at <strong>Arizona State University</strong>, with an expected graduation date of <strong>May 2027</strong>. I also earned an Associate of Science in Computer Science from Mesa Community College in May 2025.</p>
-          <p>My experience spans Java application development, accessibility-focused front-end work, and research into how large language models make privacy-related decisions. I enjoy creating useful, understandable experiences and improving them through testing and iteration.</p>
-          <p>I'm also working on a <strong>personal AI project with ChatGPT</strong>. It's still in progress, so I'll share implementation details and demos once they're ready.</p>
-        </div>
-        <aside class="quick-facts" aria-label="Quick facts">
-          <div class="fact"><small>School</small><strong>Arizona State University</strong></div>
-          <div class="fact"><small>Expected graduation</small><strong>May 2027</strong></div>
-          <div class="fact"><small>Areas of interest</small><strong>Software, accessibility &amp; AI</strong></div>
-          <div class="fact"><small>Creative interest</small><strong>Photography</strong></div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="shell section" id="skills">
-      <div class="section-head"><div class="eyebrow">02 / Toolkit</div><h2>Technical skills</h2><p class="section-description">Technologies from my resume, along with the web technologies used to create this portfolio.</p></div>
-      <div class="skill-grid">
-        <div class="skill-group"><h3>Languages &amp; web</h3><div class="skill-list"><span class="skill">Java</span><span class="skill">C++</span><span class="skill">Python</span><span class="skill">SQL</span><span class="skill">HTML</span><span class="skill">CSS</span><span class="skill">JavaScript</span></div></div>
-        <div class="skill-group"><h3>Frameworks &amp; concepts</h3><div class="skill-list"><span class="skill">React</span><span class="skill">MVC</span><span class="skill">Data Structures</span><span class="skill">OOP</span><span class="skill">CRUD</span><span class="skill">Accessibility testing</span></div></div>
-        <div class="skill-group"><h3>Developer &amp; design tools</h3><div class="skill-list"><span class="skill">Git</span><span class="skill">GitHub</span><span class="skill">MATLAB</span><span class="skill">Logisim</span><span class="skill">Fusion 360</span><span class="skill">Onshape</span></div></div>
-      </div>
-    </section>
-
-    <section class="shell section" id="projects">
-      <div class="section-head"><div class="eyebrow">03 / Work &amp; exploration</div><h2>Selected projects</h2><p class="section-description">Coursework, collaborative research, accessibility work, and independent experiments. In-progress projects are clearly labeled.</p></div>
-      <div class="filters" role="group" aria-label="Filter projects">
-        <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All projects</button>
-        <button class="filter-button" type="button" data-filter="software" aria-pressed="false">Software</button>
-        <button class="filter-button" type="button" data-filter="ai" aria-pressed="false">AI &amp; research</button>
-        <button class="filter-button" type="button" data-filter="accessibility" aria-pressed="false">Accessibility</button>
-      </div>
-      <p id="filter-summary" class="section-description" role="status" aria-live="polite">Showing all 6 projects.</p>
-      <div class="projects-grid">
-        <article class="project-card" data-category="ai software">
-          <div class="project-banner violet" aria-hidden="true">✳ Personal AI</div>
-          <div class="project-body">
-            <span class="status">Personal · In progress</span>
-            <h3>Personal AI with ChatGPT</h3>
-            <p>An ongoing personal project exploring a personal AI experience with ChatGPT. The design, functionality, and implementation are still being developed; technical details and a demonstration will be added when they're ready.</p>
-            <div class="project-meta">Personal exploration · In development</div>
-          </div>
-        </article>
-        <article class="project-card" data-category="accessibility software">
-          <div class="project-banner sage" aria-hidden="true">♿ Inclusive interfaces</div>
-          <div class="project-body">
-            <span class="status">Team project · In progress</span>
-            <h3>Studio XE — Accessibility &amp; Interface Consistency</h3>
-            <p>Integrating automated accessibility checks into continuous integration with axe-core and eslint-plugin-jsx-a11y. Improving keyboard and screen-reader access in React and TypeScript interfaces, with WCAG 2.2 AA and VPAT 2.5 evaluation work.</p>
-            <div class="project-meta">Fall 2026 – Spring 2027 · React / TypeScript / Accessibility</div>
-          </div>
-        </article>
-        <article class="project-card" data-category="ai">
-          <div class="project-banner blue" aria-hidden="true">◎ LLM privacy</div>
-          <div class="project-body">
-            <span class="status">Research · In progress</span>
-            <h3>LLM-Based Data Sharing Research</h3>
-            <p>Working with a six-member team to design experiments evaluating LLM privacy decisions involving personal and third-party data, including model confidence, consistency, and the effects of prompts.</p>
-            <div class="project-meta">Fall 2026 · Collaborative research</div>
-          </div>
-        </article>
-        <article class="project-card" data-category="software">
-          <div class="project-banner cream" aria-hidden="true">&lt;/&gt; Java + MVC</div>
-          <div class="project-body">
-            <span class="status">Academic project · Completed</span>
-            <h3>Student Discussion Application</h3>
-            <p>Developed a Java discussion application using MVC architecture, input validation, and CRUD operations. Collaborated with an Agile team to implement user stories and improve reliability through iterative testing.</p>
-            <div class="project-meta">Fall 2025 · Java / MVC / CRUD</div>
-          </div>
-        </article>
-        <article class="project-card" data-category="software">
-          <div class="project-banner" aria-hidden="true">&lt;/&gt; My portfolio</div>
-          <div class="project-body">
-            <span class="status">Personal project · Ongoing</span>
-            <h3>Personal Portfolio Website</h3>
-            <p>This responsive website is built using HTML, CSS, and JavaScript. I use Git commits, feature branches, and pull requests to organize changes, including design updates and the light/dark theme toggle.</p>
-            <div class="project-meta">HTML / CSS / JavaScript / GitHub</div>
-            <a class="project-link" href="https://github.com/tbannaraASU/personal-portfolio" target="_blank" rel="noopener noreferrer">View code on GitHub ↗</a>
-          </div>
-        </article>
-        <article class="project-card" data-category="software">
-          <div class="project-banner gray" aria-hidden="true">⇄ Digital logic</div>
-          <div class="project-body">
-            <span class="status">Academic project · Completed</span>
-            <h3>Mustang Emergency Tail Light</h3>
-            <p>Designed an FSM-based counter in Logisim to simulate Mustang tail light sequences using state diagrams, Boolean logic, and digital circuit design.</p>
-            <div class="project-meta">Spring 2024 · Logisim / Finite State Machines</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell section" id="experience">
-      <div class="section-head"><div class="eyebrow">04 / Background</div><h2>Education &amp; experience</h2><p class="section-description">The academic and professional experiences that shape how I work.</p></div>
-      <div class="timeline">
-        <article class="timeline-item">
-          <small>Education</small><h3>B.S. Computer Science — Arizona State University</h3>
-          <div class="date">Expected May 2027 · Tempe, Arizona</div>
-          <p>Coursework includes Data Structures, Software Design, Discrete Mathematics, Linear Algebra, and Programmable Logic.</p>
-        </article>
-        <article class="timeline-item">
-          <small>Education</small><h3>A.S. Computer Science — Mesa Community College</h3>
-          <div class="date">May 2025</div>
-          <p>Coursework includes Java, C++, and Calculus I–III.</p>
-        </article>
-        <article class="timeline-item">
-          <small>Work experience</small><h3>Chemistry Tutor — Mesa Community College</h3>
-          <div class="date">February 2024 – May 2025</div>
-          <p>Supported students in CHM 151–152 with problem-solving, calculations, lab concepts, and preparation for exams.</p>
-        </article>
-        <article class="timeline-item">
-          <small>How I work</small><h3>Collaboration, testing &amp; communication</h3>
-          <div class="date">Across academic and team projects</div>
-          <p>Experience collaborating on software features, testing iteratively, improving accessibility, and explaining technical concepts clearly.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell section" id="interests">
-      <div class="section-head"><div class="eyebrow">05 / Beyond code</div><h2>Photography</h2></div>
-      <div class="panel interests-panel">
-        <div class="camera-icon" aria-hidden="true">📷</div>
-        <div class="photography-intro">
-          <h3>Curiosity in every frame</h3>
-          <p>Photography gives me a creative perspective outside software development. Visit my dedicated photography page for a gallery that I can fill with my own images as I continue shooting.</p>
-          <a class="button button-primary photography-cta" href="photography.html">View photography gallery <span aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="shell section" id="contact">
-      <div class="section-head"><div class="eyebrow">06 / Let's connect</div><h2>Contact</h2></div>
-      <div class="panel contact-panel">
-        <div><h3>Want to connect or learn more?</h3><p>Reach out by email, find my work on GitHub, or connect with me on LinkedIn.</p></div>
-        <div class="actions">
-          <a class="button button-primary" href="mailto:bannathan8@gmail.com">Email me ↗</a>
-          <a class="button button-secondary" href="https://www.linkedin.com/in/thanbannarat" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          <a class="button button-secondary" href="https://github.com/tbannaraASU" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer"><div class="shell footer-inner"><span>© <span id="year">2026</span> Than Bannarat</span><span>Built with HTML, CSS &amp; JavaScript · Managed with Git</span></div></footer>
-  <script>
-    const root = document.documentElement;
-    const themeButton = document.getElementById('theme-toggle');
-    const themeKey = 'portfolio-theme';
-    let storedTheme = null;
-    try { storedTheme = localStorage.getItem(themeKey); } catch (_) { /* Local preview may disable storage. */ }
-    function applyTheme(theme) {
-      const dark = theme === 'dark';
-      root.dataset.theme = dark ? 'dark' : 'light';
-      themeButton.textContent = dark ? '☀ Light mode' : '☾ Dark mode';
-      themeButton.setAttribute('aria-pressed', String(dark));
-      themeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-    }
-    applyTheme(storedTheme === 'dark' ? 'dark' : 'light');
-    themeButton.addEventListener('click', () => {
-      const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      applyTheme(nextTheme);
-      try { localStorage.setItem(themeKey, nextTheme); } catch (_) { /* Toggle still works. */ }
-    });
-    const filterButtons = Array.from(document.querySelectorAll('[data-filter]'));
-    const projectCards = Array.from(document.querySelectorAll('.project-card[data-category]'));
-    const filterSummary = document.getElementById('filter-summary');
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const filter = button.dataset.filter;
-        filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-        let visible = 0;
-        projectCards.forEach(card => {
-          const show = filter === 'all' || card.dataset.category.split(' ').includes(filter);
-          card.hidden = !show;
-          if (show) visible++;
-        });
-        filterSummary.textContent = filter === 'all'
-          ? `Showing all ${visible} projects.`
-          : `Showing ${visible} ${button.textContent.trim().toLowerCase()} ${visible === 1 ? 'project' : 'projects'}.`;
-      });
-    });
-    document.getElementById('year').textContent = String(new Date().getFullYear());
-  </script>
+  <footer class="footer" id="site-footer"><div class="shell footer-inner"><span id="footer-left">© <span id="year">2026</span> Than Bannarat</span><span id="footer-right">Built with HTML, CSS &amp; JavaScript · Managed with Git</span></div></footer>
+  <script src="data/portfolio-data.js"></script>
+  <script src="portfolio.js"></script>
 </body>
 </html>
