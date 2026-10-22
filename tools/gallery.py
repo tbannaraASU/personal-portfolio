@@ -284,6 +284,30 @@ def import_csv(path):
     print(f'Imported {total} curated photo sets from CSV.')
 
 
+def build_thumbnails():
+    """Generate small WebP preview images. Originals remain unchanged.
+
+    Thumbnail paths are deterministic and can safely be committed to GitHub Pages.
+    """
+    from PIL import Image, ImageOps
+    thumb_dir=MEDIA/'thumbs'
+    thumb_dir.mkdir(parents=True,exist_ok=True)
+    made=0
+    for original in MEDIA.iterdir():
+        if not original.is_file() or original.suffix.lower() not in SUPPORTED:continue
+        thumb=thumb_dir/(original.stem+'.webp')
+        if thumb.is_file() and thumb.stat().st_mtime>=original.stat().st_mtime:continue
+        try:
+            with Image.open(original) as image:
+                image=ImageOps.exif_transpose(image).convert('RGB')
+                image.thumbnail((640,640),Image.Resampling.LANCZOS)
+                image.save(thumb,'WEBP',quality=72,method=5)
+            made+=1
+        except (OSError,ValueError) as exc:
+            print(f'Warning: skipping thumbnail for {original.name}: {exc}',file=sys.stderr)
+    return made
+
+
 def build():
     """Publish photo sets, hashtag counts and curated albums for static GitHub Pages."""
     with db_connect() as con:
@@ -313,6 +337,11 @@ def build():
     rendered = json.dumps(content,ensure_ascii=False,indent=2)
     (data/'gallery.json').write_text(rendered+'\n',encoding='utf-8')
     (data/'gallery-data.js').write_text('/* Built from SQLite. Do not edit by hand. */\nwindow.PORTFOLIO_GALLERY = '+rendered+';\n',encoding='utf-8')
+    try:
+        made=build_thumbnails()
+        print(f'Built {made} new thumbnails for faster loading.')
+    except ImportError:
+        print('Tip: Install Pillow to generate faster WebP thumbnails.')
     print(f'Built gallery for {len(collection)} photo sets and {len(albums)} populated albums.')
 
 
