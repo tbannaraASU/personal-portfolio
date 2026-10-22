@@ -1,0 +1,271 @@
+{
+  "sections": [
+    {
+      "id": "hero",
+      "kind": "hero",
+      "title": "Welcome",
+      "eyebrow": "",
+      "description": "",
+      "enabled": true,
+      "items": [
+        {
+          "eyebrow": "Computer Science · Arizona State University",
+          "headline": "Hi, I'm",
+          "highlight": "Than.",
+          "intro": "I build and improve user-focused software, with interests in accessibility, responsible AI research, and thoughtful design. Outside of code, I enjoy photography.",
+          "badge1": "B.S. expected May 2027",
+          "badge2": "Software · Accessibility · AI",
+          "card_label": "Currently learning & building",
+          "card_title": "Computer Science at ASU",
+          "card_body": "Exploring personal AI with ChatGPT while contributing to software and research projects.",
+          "action_label": "Explore my projects",
+          "action_url": "#projects",
+          "profile_initials": "TB ✳",
+          "nav_brand": "than.",
+          "secondary_label": "GitHub profile",
+          "secondary_url": "https://github.com/tbannaraASU"
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "kind": "about",
+      "title": "About me",
+      "eyebrow": "01 / Introduction",
+      "description": "",
+      "enabled": true,
+      "items": [
+        {
+          "type": "paragraph",
+          "body": "I'm Than Bannarat , a senior Computer Science student at Arizona State University , with an expected graduation date of May 2027 . I also earned an Associate of Science in Computer Science from Mesa Community College in May 2025."
+        },
+        {
+          "type": "paragraph",
+          "body": "My experience spans Java application development, accessibility-focused front-end work, and research into how large language models make privacy-related decisions. I enjoy creating useful, understandable experiences and improving them through testing and iteration."
+        },
+        {
+          "type": "paragraph",
+          "body": "I'm also working on a personal AI project with ChatGPT . It's still in progress, so I'll share implementation details and demos once they're ready."
+        },
+        {
+          "type": "fact",
+          "title": "School",
+          "body": "Arizona State University"
+        },
+        {
+          "type": "fact",
+          "title": "Expected graduation",
+          "body": "May 2027"
+        },
+        {
+          "type": "fact",
+          "title": "Areas of interest",
+          "body": "Software, accessibility & AI"
+        },
+        {
+          "type": "fact",
+          "title": "Creative interest",
+          "body": "Photography"
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "kind": "skills",
+      "title": "Technical skills",
+      "eyebrow": "02 / Toolkit",
+      "description": "Technologies from my resume, along with the web technologies used to create this portfolio.",
+      "enabled": true,
+      "items": [
+        {
+          "title": "Languages & web",
+          "skills": "Java, C++, Python, SQL, HTML, CSS, JavaScript"
+        },
+        {
+          "title": "Frameworks & concepts",
+          "skills": "React, MVC, Data Structures, OOP, CRUD, Accessibility testing"
+        },
+        {
+          "title": "Developer & design tools",
+          "skills": "Git, GitHub, MATLAB, Logisim, Fusion 360, Onshape"
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "kind": "projects",
+      "title": "Selected projects",
+      "eyebrow": "03 / Work & exploration",
+      "description": "Coursework, collaborative research, accessibility work, and independent experiments. In-progress projects are clearly labeled.",
+      "enabled": true,
+      "items": [
+        {
+          "title": "Personal AI with ChatGPT",
+          "summary": "An ongoing personal project exploring a personal AI experience with ChatGPT. The design, functionality, and implementation are still being developed; technical details and a demonstration will be added when they're ready.",
+          "details": "An ongoing personal project exploring a personal AI experience with ChatGPT. The design, functionality, and implementation are still being developed; technical details and a demonstration will be added when they're ready.",
+          "status": "Personal · In progress",
+          "tags": "ai software",
+          "period": "Personal exploration · In development",
+          "banner": "✳ Personal AI",
+          "theme": "violet",
+          "link": "",
+          "link_label": ""
+        },
+        {
+          "title": "Studio XE — Accessibility & Interface Consistency",
+          "summary": "Integrating automated accessibility checks into continuous integration with axe-core and eslint-plugin-jsx-a11y. Improving keyboard and screen-reader access in React and TypeScript interfaces, with WCAG 2.2 AA and VPAT 2.5 evaluation work.",
+          "details": "Integrating automated accessibility checks into continuous integration with axe-core and eslint-plugin-jsx-a11y. Improving keyboard and screen-reader access in React and TypeScript interfaces, with WCAG 2.2 AA and VPAT 2.5 evaluation work.",
+          "status": "Team project · In progress",
+          "tags": "accessibility software",
+          "period": "Fall 2026 – Spring 2027 · React / TypeScript / Accessibility",
+          "banner": "♿ Inclusive interfaces",
+          "theme": "sage",
+          "link": "",
+          "link_label": ""
+        },
+        {
+          "title": "LLM-Based Data Sharing Research",
+          "summary": "Working with a six-member team to design experiments evaluating LLM privacy decisions involving personal and third-party data, including model confidence, consistency, and the effects of prompts.",
+          "details": "Working with a six-member team to design experiments evaluating LLM privacy decisions involving personal and third-party data, including model confidence, consistency, and the effects of prompts.",
+          "status": "Research · In progress",
+          "tags": "ai",
+          "period": "Fall 2026 · Collaborative research",
+          "banner": "◎ LLM privacy",
+          "theme": "blue",
+          "link": "",
+          "link_label": ""
+        },
+        {
+          "title": "Student Discussion Application",
+          "summary": "Developed a Java discussion application using MVC architecture, input validation, and CRUD operations. Collaborated with an Agile team to implement user stories and improve reliability through iterative testing.",
+          "details": "Developed a Java discussion application using MVC architecture, input validation, and CRUD operations. Collaborated with an Agile team to implement user stories and improve reliability through iterative testing.",
+          "status": "Academic project · Completed",
+          "tags": "software",
+          "period": "Fall 2025 · Java / MVC / CRUD",
+          "banner": "</> Java + MVC",
+          "theme": "cream",
+          "link": "",
+          "link_label": ""
+        },
+        {
+          "title": "Personal Portfolio Website",
+          "summary": "This responsive website is built using HTML, CSS, and JavaScript. I use Git commits, feature branches, and pull requests to organize changes, including design updates and the light/dark theme toggle.",
+          "details": "This responsive website is built using HTML, CSS, and JavaScript. I use Git commits, feature branches, and pull requests to organize changes, including design updates and the light/dark theme toggle.",
+          "status": "Personal project · Ongoing",
+          "tags": "software",
+          "period": "HTML / CSS / JavaScript / GitHub",
+          "banner": "</> My portfolio",
+          "theme": "peach",
+          "link": "https://github.com/tbannaraASU/personal-portfolio",
+          "link_label": "View code on GitHub ↗"
+        },
+        {
+          "title": "Mustang Emergency Tail Light",
+          "summary": "Designed an FSM-based counter in Logisim to simulate Mustang tail light sequences using state diagrams, Boolean logic, and digital circuit design.",
+          "details": "Designed an FSM-based counter in Logisim to simulate Mustang tail light sequences using state diagrams, Boolean logic, and digital circuit design.",
+          "status": "Academic project · Completed",
+          "tags": "software",
+          "period": "Spring 2024 · Logisim / Finite State Machines",
+          "banner": "⇄ Digital logic",
+          "theme": "gray",
+          "link": "",
+          "link_label": ""
+        }
+      ]
+    },
+    {
+      "id": "experience",
+      "kind": "experience",
+      "title": "Education & experience",
+      "eyebrow": "04 / Background",
+      "description": "The academic and professional experiences that shape how I work.",
+      "enabled": true,
+      "items": [
+        {
+          "label": "Education",
+          "title": "B.S. Computer Science — Arizona State University",
+          "period": "Expected May 2027 · Tempe, Arizona",
+          "body": "Coursework includes Data Structures, Software Design, Discrete Mathematics, Linear Algebra, and Programmable Logic."
+        },
+        {
+          "label": "Education",
+          "title": "A.S. Computer Science — Mesa Community College",
+          "period": "May 2025",
+          "body": "Coursework includes Java, C++, and Calculus I–III."
+        },
+        {
+          "label": "Work experience",
+          "title": "Chemistry Tutor — Mesa Community College",
+          "period": "February 2024 – May 2025",
+          "body": "Supported students in CHM 151–152 with problem-solving, calculations, lab concepts, and preparation for exams."
+        },
+        {
+          "label": "How I work",
+          "title": "Collaboration, testing & communication",
+          "period": "Across academic and team projects",
+          "body": "Experience collaborating on software features, testing iteratively, improving accessibility, and explaining technical concepts clearly."
+        }
+      ]
+    },
+    {
+      "id": "photography",
+      "kind": "photography",
+      "title": "Photography",
+      "eyebrow": "05 / Beyond code",
+      "description": "",
+      "enabled": true,
+      "items": [
+        {
+          "title": "Curiosity in every frame",
+          "body": "Photography gives me a creative perspective outside software development. Visit my dedicated photography page for a gallery that I can fill with my own images as I continue shooting.",
+          "link": "photography.html",
+          "link_label": "View photography gallery"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "kind": "contact",
+      "title": "Contact",
+      "eyebrow": "06 / Let's connect",
+      "description": "",
+      "enabled": true,
+      "items": [
+        {
+          "type": "intro",
+          "title": "Want to connect or learn more?",
+          "body": "Reach out by email, find my work on GitHub, or connect with me on LinkedIn."
+        },
+        {
+          "type": "link",
+          "title": "Email me ↗",
+          "link": "mailto:bannathan8@gmail.com"
+        },
+        {
+          "type": "link",
+          "title": "LinkedIn ↗",
+          "link": "https://www.linkedin.com/in/thanbannarat"
+        },
+        {
+          "type": "link",
+          "title": "GitHub ↗",
+          "link": "https://github.com/tbannaraASU"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "kind": "footer",
+      "title": "Footer",
+      "eyebrow": "",
+      "description": "",
+      "enabled": true,
+      "items": [
+        {
+          "left": "© {year} Than Bannarat",
+          "right": "Built with HTML, CSS & JavaScript · Managed with Git"
+        }
+      ]
+    }
+  ]
+}
