@@ -11,7 +11,7 @@
   const safeUrl=value=>{
     const v=String(value||'').trim();
     if (/^#[a-z][\w-]*$/i.test(v))return v;
-    if (/^(?:[a-z\w-]+\.html)(?:\?[^<>"']*)?$/i.test(v))return v;
+    if (/^(?:[a-z\w-]+\/)*[a-z\w-]+\.html(?:\?[^<>"']*)?$/i.test(v))return v;
     try { const u=new URL(v,location.href); if (['https:','http:','mailto:'].includes(u.protocol))return v; } catch(_){}
     return '';
   };
@@ -69,11 +69,64 @@
     cards.forEach(card=>{const show=val==='all'||tags(card.dataset.category).includes(val);card.hidden=!show;if(show)count++;});
     const status=document.getElementById('filter-summary');if(status)status.textContent=`Showing ${count} ${count===1?'project':'projects'}${val==='all'?'.':' in '+val+'.'}`;
   }));
+  const projectImages=value=>String(value||'').split(/\r?\n/).map(v=>v.trim()).filter(v=>/^project-images\/[a-zA-Z0-9_-]+\.(?:webp|jpg|jpeg|png)$/i.test(v)).slice(0,16);
+  let currentGallery=[], galleryIndex=0, opener=null;
+  function setGalleryImage(index){
+    if(!currentGallery.length)return;
+    galleryIndex=(index+currentGallery.length)%currentGallery.length;
+    const img=modalBody.querySelector('#project-detail-photo');
+    const caption=modalBody.querySelector('#project-image-caption');
+    const count=modalBody.querySelector('#project-image-count');
+    if(img){img.src=currentGallery[galleryIndex].src;img.alt=currentGallery[galleryIndex].caption||`Project screenshot ${galleryIndex+1}`;}
+    if(caption)caption.textContent=currentGallery[galleryIndex].caption||'Project image';
+    if(count)count.textContent=`${galleryIndex+1} / ${currentGallery.length}`;
+    modalBody.querySelectorAll('[data-photo-index]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.photoIndex)===galleryIndex)));
+  }
   function showProject(i){
     const p=projects[i];if(!p)return;
-    modalBody.innerHTML=`<span class="status">${line(p.status)}</span><h2 id="project-dialog-title">${line(p.title)}</h2><p class="project-dialog-sub">${line(p.period)}</p><p class="multiline">${line(p.details||p.summary)}</p>${p.outcomes?`<h3>Highlights</h3><p class="multiline">${line(p.outcomes)}</p>`:''}${p.tags?`<div class="skill-list">${tags(p.tags).map(t=>`<span class="skill">${line(t)}</span>`).join('')}</div>`:''}<div class="actions">${link(p.link,p.link_label||'See project')}</div>`;
+    opener=document.activeElement;
+    const skills=String(p.skills||'').split(/[,\n]+/).map(x=>x.trim()).filter(Boolean);
+    const images=projectImages(p.images);
+    const captions=String(p.image_captions||'').split(/\r?\n/).map(x=>x.trim());
+    currentGallery=images.map((src,i)=>({src,caption:captions[i]||''})); galleryIndex=0;
+    const periodLabel=/(?:20\d{2}|spring|summer|fall|winter|present|month|year)/i.test(String(p.period||''))?'Project timeline':'Project context';
+    const metadata=[[periodLabel,p.period],['Duration',p.duration],['Role / team',p.role]].filter(x=>x[1]);
+    const metadataHtml=metadata.length?`<div class="project-facts">${metadata.map(([key,value])=>`<div><small>${line(key)}</small><strong>${line(value)}</strong></div>`).join('')}</div>`:'';
+    const galleryHtml=currentGallery.length?`<div class="project-media"><div class="project-image-stage"><img id="project-detail-photo" src="${escapeHtml(currentGallery[0].src)}" alt="${escapeHtml(currentGallery[0].caption||'Project screenshot')}" decoding="async"></div><div class="project-image-toolbar"><span id="project-image-caption">${line(currentGallery[0].caption||'Project image')}</span><span id="project-image-count">1 / ${currentGallery.length}</span></div>${currentGallery.length>1?`<div class="project-gallery-controls"><button type="button" id="project-image-prev" aria-label="Previous image">← Previous</button><div class="project-image-dots">${currentGallery.map((x,i)=>`<button type="button" data-photo-index="${i}" aria-pressed="${i===0}" aria-label="Show image ${i+1}">${i+1}</button>`).join('')}</div><button type="button" id="project-image-next" aria-label="Next image">Next →</button></div>`:''}</div>`:'';
+    const highlights=String(p.outcomes||'').split(/\r?\n/).map(t=>t.trim().replace(/^[-•*]\s*/, '')).filter(Boolean);
+    const highlightsHtml=highlights.length?`<section class="project-block"><h3>Highlights</h3><ul class="project-highlights">${highlights.map(t=>`<li>${line(t)}</li>`).join('')}</ul></section>`:'';
+    const skillHtml=skills.length?`<section class="project-block"><h3>Skills & technologies</h3><div class="skill-list">${skills.map(t=>`<span class="skill">${line(t)}</span>`).join('')}</div></section>`:'';
+    const urls=[];
+    if(p.github_url)urls.push([p.github_url,'View on GitHub']);
+    if(p.demo_url)urls.push([p.demo_url,'Live demo']);
+    if(p.link&&!urls.some(x=>x[0]===p.link))urls.push([p.link,p.link_label||'Project link']);
+    const links=urls.map(([url,label])=>link(url,label,'button button-secondary')).filter(Boolean).join('');
+    modalBody.innerHTML=`<div class="project-header"><span class="status">${line(p.status||'Project')}</span><h2 id="project-dialog-title">${line(p.title)}</h2><p class="project-dialog-intro multiline">${line(p.summary)}</p></div>${galleryHtml}${metadataHtml}<section class="project-block"><h3>About this project</h3><p class="multiline">${line(p.details||p.summary)}</p></section>${highlightsHtml}${skillHtml}${links?`<div class="actions project-links">${links}</div>`:''}`;
     modal.showModal();
+    const prev=modalBody.querySelector('#project-image-prev'),next=modalBody.querySelector('#project-image-next');
+    if(prev)prev.onclick=()=>setGalleryImage(galleryIndex-1);
+    if(next)next.onclick=()=>setGalleryImage(galleryIndex+1);
+    modalBody.querySelectorAll('[data-photo-index]').forEach(b=>b.onclick=()=>setGalleryImage(Number(b.dataset.photoIndex)));
   }
+  // Swipe between screenshots on touch devices, in addition to buttons and arrow keys.
+  let touchStart=null;
+  modal.addEventListener('touchstart',event=>{
+    if(!event.target.closest('.project-image-stage')||event.touches.length!==1)return;
+    touchStart={x:event.touches[0].clientX,y:event.touches[0].clientY};
+  },{passive:true});
+  modal.addEventListener('touchend',event=>{
+    if(!touchStart||!event.changedTouches.length){touchStart=null;return;}
+    const dx=event.changedTouches[0].clientX-touchStart.x;
+    const dy=event.changedTouches[0].clientY-touchStart.y;
+    touchStart=null;
+    if(currentGallery.length>1&&Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.25){setGalleryImage(galleryIndex+(dx<0?1:-1));}
+  },{passive:true});
+  modal.addEventListener('keydown',ev=>{
+    if(!currentGallery.length||!modal.open||!['ArrowLeft','ArrowRight'].includes(ev.key))return;
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName||''))return;
+    ev.preventDefault();setGalleryImage(galleryIndex+(ev.key==='ArrowRight'?1:-1));
+  });
+  modal.addEventListener('close',()=>{currentGallery=[];if(opener?.isConnected)opener.focus();});
   host.addEventListener('click',ev=>{if(ev.target.closest('a'))return;const trigger=ev.target.closest('[data-project]');if(trigger)showProject(Number(trigger.dataset.project));});
   document.getElementById('project-close').addEventListener('click',()=>modal.close());
   modal.addEventListener('click',ev=>{if(ev.target===modal)modal.close();});

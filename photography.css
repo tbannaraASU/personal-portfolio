@@ -9,3 +9,11 @@
 @media(max-width:920px){.categories-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.categories-grid{grid-template-columns:1fr}.compact-hero{padding:44px 0 32px}.detail-hero{padding:34px 0 24px}}
 /* Keep the collection chooser visible without unnecessary scrolling. */
 .compact-hero{padding:37px 0 22px}.compact-hero h1{font-size:clamp(2.7rem,5vw,4.3rem)}.compact-hero .actions{margin-top:12px}.compact-hero .button{padding:9px 14px}.gallery-section{padding-top:8px}.gallery-section .section-head{margin-bottom:19px}.collection-tabs{margin-bottom:17px}.toolbar{margin-bottom:19px}
+
+/* V11: touchscreen-friendly gallery navigation and rendering */
+.viewer-bottom button{min-width:110px;min-height:44px;touch-action:manipulation}
+.viewer-bottom button:disabled{opacity:.42;cursor:not-allowed}
+.viewer-image-wrap img{width:auto;height:auto;max-width:100%;max-height:100%;touch-action:pan-y}
+.category-cover img{object-fit:cover}
+.card-image img,.category-cover img{content-visibility:auto}
+@media(max-width:600px){.viewer-bottom{gap:5px}.viewer-bottom button{font-size:.78rem;padding:9px 7px;min-width:84px}.viewer-bottom span{text-align:center;font-size:.68rem}.viewer-bar{align-items:start}.viewer-image-wrap{height:56dvh;max-height:70vh}}
