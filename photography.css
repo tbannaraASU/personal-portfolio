@@ -37,3 +37,13 @@
 }
 @media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card-text{padding:10px}.card-text p{display:none}.card-text h4{font-size:.86rem}.categories-grid{grid-template-columns:1fr}.viewer-image-wrap{height:55dvh;min-height:220px}.viewer-bar{align-items:flex-start}.viewer-bottom{flex-wrap:wrap}.viewer-bottom span{order:-1;flex-basis:100%}}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
+
+/* Instagram link beneath Photography collections (V14) */
+.instagram-endcap{padding:0 0 76px;text-align:center}
+.instagram-endcap-inner{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:35px 24px}
+.instagram-endcap .eyebrow{margin:0 0 8px}
+.instagram-endcap h2{font-size:clamp(1.5rem,3.5vw,2.1rem);line-height:1.2;letter-spacing:-.035em;margin:0 0 10px}
+.instagram-endcap p:not(.eyebrow){color:var(--muted);margin:0 auto 22px;max-width:580px}
+.instagram-endcap-button{background:var(--accent);color:var(--background);border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;min-height:48px}
+.instagram-endcap-button:hover{background:var(--accent-dark)}
+@media(max-width:600px){.instagram-endcap{padding-bottom:48px}.instagram-endcap-inner{padding:28px 17px}.instagram-endcap-button{width:100%;max-width:340px}}
