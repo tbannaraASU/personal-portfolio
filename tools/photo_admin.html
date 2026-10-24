@@ -1,12 +1,28 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Photography Studio | Than Bannarat</title>
 <style>
 :root{--ink:#282335;--sub:#68616c;--bg:#fff7f2;--surface:#fff;--accent:#ad543e;--stroke:#ead8ce;--light:#fff0e7}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,sans-serif}main{width:min(1190px,calc(100% - 36px));margin:36px auto 70px}h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.1;margin:12px 0}h2{font-size:1.28rem;margin:0 0 12px}h3{font-size:1rem;margin:14px 0 7px}.eyebrow{color:var(--accent);font-weight:770;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}.intro{max-width:710px;color:var(--sub)}.summary{display:flex;gap:12px;flex-wrap:wrap;margin:23px 0}.summary span{border:1px solid var(--stroke);background:var(--surface);border-radius:12px;padding:10px 15px;font-size:.9rem}.layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}.panel{background:var(--surface);border:1px solid var(--stroke);border-radius:18px;padding:24px;box-shadow:0 12px 34px #633a3010}.wide{grid-column:1/-1}.field{margin:13px 0}label{display:block;font-weight:700;font-size:.86rem;margin-bottom:6px}input:not([type=checkbox]),textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #c8b7b2;background:#fff;color:#29242e;font:inherit}textarea{resize:vertical}button,.btn{background:var(--accent);border:0;border-radius:9px;color:#fff;padding:10px 17px;font:inherit;font-weight:740;cursor:pointer;display:inline-flex;justify-content:center;text-decoration:none}button:disabled{opacity:.5;cursor:wait}.secondary{background:var(--light);color:#803d2d}.danger{background:#9a2a2a}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.status{margin-top:14px;padding:11px;background:#f9f1eb;border-radius:9px;white-space:pre-wrap;font-size:.88rem}.status.bad{background:#ffebe8;color:#842b26}.status.ok{background:#e7f4e9;color:#246039}.small{font-size:.82rem;color:var(--sub)}.hint{border-left:4px solid var(--accent);background:var(--light);padding:12px 15px;border-radius:9px;margin:20px 0}.gallery-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.gallery-preview img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}.check-list{max-height:235px;overflow:auto;border:1px solid var(--stroke);border-radius:10px;padding:6px;background:#fffcfa}.check-list label{display:flex;align-items:center;gap:9px;padding:7px;margin:0;font-weight:500;cursor:pointer;border-radius:7px}.check-list label:hover{background:var(--light)}.check-list img{width:46px;height:46px;object-fit:cover;border-radius:6px}.check-list input{accent-color:var(--accent)}.check-list small{color:var(--sub)}.check-list label span{min-width:0;overflow-wrap:anywhere}.select-inline{display:flex;gap:10px}.select-inline select{flex:1}.subtle-divider{border:0;border-top:1px solid var(--stroke);margin:26px 0}.links{display:flex;gap:15px;flex-wrap:wrap}a{color:var(--accent)}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #f8ac8b;outline-offset:2px}@media(max-width:800px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}.panel{padding:18px}.gallery-preview{grid-template-columns:repeat(3,1fr)}}
+.featured-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:10px;max-height:340px;overflow:auto;padding:10px;border:1px solid var(--stroke);border-radius:12px}
+.featured-choice{position:relative;display:block;width:100%;background:transparent;color:inherit;border:2px solid transparent;border-radius:12px;padding:4px;text-align:left;cursor:pointer;font-weight:600}
+.featured-choice img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;margin-bottom:4px}
+.featured-choice span{font-size:.74rem;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.featured-choice[aria-pressed="true"]{border-color:var(--accent);background:var(--light)}
+.featured-order{position:absolute;top:8px;left:8px;background:#722b20;color:white;padding:2px 7px;border-radius:99px;font-size:.8rem}
+.featured-selected{padding:12px 0;font-size:.88rem;color:var(--sub)}
+@media(max-width:480px){.featured-picker{grid-template-columns:repeat(3,minmax(0,1fr))}main{width:calc(100% - 24px)}.panel{padding:14px}}
 </style></head><body><main>
 <div class="links"><a href="/photography.html">← View gallery</a><a href="/index.html">Portfolio home</a><a href="/admin/portfolio" style="font-weight:800">✎ Edit portfolio content ↗</a></div>
 <p class="eyebrow">Local editing studio · @foto_4th</p><h1>Photography Manager</h1><p class="intro">Add photo sets, curate independent albums, and manage hashtags. Changes are written to SQLite on your Mac and exported to the static portfolio. Visitors cannot use this admin.</p>
 <p class="hint"><strong>Local only:</strong> <code>http://127.0.0.1:8765/admin</code>. After editing, push <code>photos/</code> and <code>data/</code> to GitHub to publish. Do not commit the local SQLite database.</p>
 <div class="summary"><span><strong id="stat-sets">—</strong> photo sets</span><span><strong id="stat-photos">—</strong> photos</span><span><strong id="stat-tags">—</strong> hashtags</span><span><strong id="stat-albums">—</strong> albums</span></div>
 <div class="layout">
+<section class="panel wide" aria-labelledby="featured-title">
+  <h2 id="featured-title">★ Featured Photos — Homepage</h2>
+  <p class="small">Select up to 3 individual photographs to show on <code>index.html</code>. Click a photo to add/remove it. The order you choose becomes the order on the homepage. No original image is modified.</p>
+  <div id="featured-selected" class="featured-selected" aria-live="polite">No photos selected.</div>
+  <div id="featured-picker" class="featured-picker" aria-label="Choose featured photographs"></div>
+  <div class="actions"><button type="button" id="featured-save">Save featured photos</button><button type="button" class="secondary" id="featured-clear">Clear selection</button></div>
+  <div id="featured-status" class="status" role="status" aria-live="polite">Choose photos, then Save.</div>
+</section>
 <section class="panel"><h2>＋ New photo set</h2><form id="upload-form">
 <div class="field"><label for="photos">Photos (1–12, JPG/PNG/WebP)</label><input id="photos" name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple required><div id="preview" class="gallery-preview"></div></div>
 <div class="field"><label for="title">Title</label><input name="title" id="title" maxlength="110" placeholder="Morning on film"></div>
@@ -65,5 +81,32 @@ $('#album-delete').onclick=async()=>{const id=$('#album-picker').value;if(!id){p
 $('#tag-create').onclick=async()=>{try{await api('/api/tag/create','POST',JSON.stringify({tag:$('#new-tag').value}));$('#new-tag').value='';await refresh();putStatus('tag-status','New hashtag saved. It will appear publicly once used by a photo set.',true);}catch(e){putStatus('tag-status',e.message,false)}};
 $('#tag-rename').onclick=async()=>{const old=$('#tag-picker').value;if(!old){putStatus('tag-status','Choose an existing tag.',false);return;}const next=$('#rename-tag').value;try{await api('/api/tag/rename','POST',JSON.stringify({old,new:next}));await refresh();$('#rename-tag').value='';putStatus('tag-status','Hashtag renamed / merged for every assigned set.',true);}catch(e){putStatus('tag-status',e.message,false)}};
 $('#tag-delete').onclick=async()=>{const tag=$('#tag-picker').value;if(!tag){putStatus('tag-status','Choose a tag.',false);return;}if(!confirm(`Remove ${tag} from all sets? Original captions will stay intact.`))return;try{await api('/api/tag/delete','POST',JSON.stringify({tag}));await refresh();putStatus('tag-status','Hashtag removed. Photos remain intact.',true);}catch(e){putStatus('tag-status',e.message,false)}};
+let featuredPhotos=[],featuredPaths=[];
+function renderFeatured(){
+  const picker=$('#featured-picker');picker.replaceChildren();
+  const selected=$('#featured-selected');
+  selected.textContent=featuredPaths.length?`Selected (${featuredPaths.length}/3): `+featuredPaths.map((p,i)=>`${i+1}. ${featuredPhotos.find(f=>f.path===p)?.title||p}`).join(' → '):'No photos selected yet.';
+  for(const photo of featuredPhotos){
+    const order=featuredPaths.indexOf(photo.path),button=document.createElement('button');
+    button.type='button';button.className='featured-choice';button.setAttribute('aria-pressed',String(order!==-1));
+    button.title=photo.title||photo.path;button.setAttribute('aria-label',`${order!==-1?'Remove':'Feature'} ${photo.title||'photo'}`);
+    const image=document.createElement('img');image.src='/'+photo.preview;image.alt=photo.alt||photo.title||'Photo';image.loading='lazy';image.decoding='async';
+    const label=document.createElement('span');label.textContent=photo.title||photo.path.split('/').pop();button.append(image,label);
+    if(order!==-1){const badge=document.createElement('b');badge.className='featured-order';badge.textContent=order+1;button.append(badge)}
+    button.onclick=()=>{
+      if(order>=0)featuredPaths.splice(order,1);
+      else if(featuredPaths.length>=3){putStatus('featured-status','Maximum 3 featured photos. Remove one first.',false);return;}
+      else featuredPaths.push(photo.path);
+      renderFeatured();
+    };picker.append(button);
+  }
+}
+async function loadFeatured(){const state=await api('/api/featured-photos');featuredPhotos=state.photos;featuredPaths=state.selected.filter(path=>featuredPhotos.some(p=>p.path===path)).slice(0,3);renderFeatured();}
+$('#featured-save').onclick=async()=>{
+  try{await api('/api/featured-photos/save','POST',JSON.stringify({paths:featuredPaths}));putStatus('featured-status',`${featuredPaths.length} featured photos saved and gallery published locally.`,true);}
+  catch(e){putStatus('featured-status',e.message,false);}
+};
+$('#featured-clear').onclick=()=>{featuredPaths=[];renderFeatured();putStatus('featured-status','Selection cleared. Click Save to confirm.');};
+loadFeatured().catch(e=>putStatus('featured-status',e.message,false));
 refresh().catch(e=>putStatus('upload-status',e.message,false));
 </script></body></html>

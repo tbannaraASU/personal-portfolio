@@ -17,3 +17,23 @@
 .category-cover img{object-fit:cover}
 .card-image img,.category-cover img{content-visibility:auto}
 @media(max-width:600px){.viewer-bottom{gap:5px}.viewer-bottom button{font-size:.78rem;padding:9px 7px;min-width:84px}.viewer-bottom span{text-align:center;font-size:.68rem}.viewer-bar{align-items:start}.viewer-image-wrap{height:56dvh;max-height:70vh}}
+
+
+/* V13: touch-friendly navigation + gallery on small screens */
+.nav-toggle{display:none;min-height:44px;min-width:76px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font-weight:750;cursor:pointer}
+.card-image{touch-action:pan-y}.card-image,.viewer-bottom button,.viewer-bar button{min-height:44px}
+.viewer-image-wrap img{height:auto;width:auto;max-width:100%;max-height:100%;object-fit:contain}
+.category-cover img{max-width:100%;height:100%;object-fit:cover}
+@media(max-width:760px){
+ .topbar .nav-inner{display:flex;flex-wrap:wrap;gap:8px;min-height:68px;padding:10px 0}
+ .nav-toggle{display:inline-flex;align-items:center;justify-content:center;order:2}
+ .topbar .theme-button{order:3;min-height:44px}
+ .topbar .nav-inner>nav{display:none;order:4;flex-basis:100%;width:100%;flex-direction:column;align-items:stretch;gap:3px;padding:8px 0 12px;border-top:1px solid var(--line)}
+ .topbar .nav-inner>nav.is-open{display:flex}
+ .topbar .nav-inner>nav a{display:block;padding:12px;font-size:.94rem;border-radius:9px}
+ .categories-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .viewer{max-height:94dvh;overflow:auto}
+ .viewer-bottom{gap:6px}.viewer-bottom button{padding:10px 8px;flex:1}.viewer-bottom span{flex:1;text-align:center;overflow-wrap:anywhere}
+}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card-text{padding:10px}.card-text p{display:none}.card-text h4{font-size:.86rem}.categories-grid{grid-template-columns:1fr}.viewer-image-wrap{height:55dvh;min-height:220px}.viewer-bar{align-items:flex-start}.viewer-bottom{flex-wrap:wrap}.viewer-bottom span{order:-1;flex-basis:100%}}
+@media(max-width:360px){.grid{grid-template-columns:1fr}}
