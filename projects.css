@@ -1,0 +1,43 @@
+/* Portfolio V12: homepage featured cards + project archive / case study pages. */
+.featured-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.project-card-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px}
+.project-card-actions .project-open,.project-card-actions .project-link{margin-top:0;font-size:.87rem}
+.view-all-projects{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:18px;margin:27px 0 0}
+.view-all-projects span{color:var(--muted);font-size:.86rem}
+.projects-page-hero{padding-top:65px;padding-bottom:12px}
+.projects-page-hero h1,.case-title{font-size:clamp(2.4rem,5.6vw,4.4rem);letter-spacing:-.06em;line-height:1.08;margin:13px 0 15px}
+.projects-page-hero .lead{max-width:730px}
+.archive-stats{margin:18px 0;color:var(--muted);font-size:.93rem}
+.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.archive-grid .project-card{cursor:default}
+.archive-grid .project-banner{min-height:120px}
+.archive-grid .project-link{margin-top:16px}
+.page-breadcrumbs{padding-top:35px;font-size:.88rem;color:var(--muted)}
+.page-breadcrumbs a{text-underline-offset:3px}
+.case-shell{width:min(100% - 48px,940px);margin:auto}
+.case-hero{padding:28px 0 26px}
+.case-hero .lead{max-width:860px}
+.case-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:23px 0 0}
+.case-meta div{padding:16px 18px;border-radius:15px;border:1px solid var(--line);background:var(--surface)}
+.case-meta small{display:block;color:var(--muted);font-size:.8rem;margin-bottom:6px}
+.case-meta strong{display:block;overflow-wrap:anywhere}
+.case-layout{display:grid;grid-template-columns:minmax(0,1fr) 235px;gap:28px;align-items:start;padding-bottom:65px}
+.case-article{min-width:0}
+.case-block{margin:0 0 18px;padding:26px 28px;background:var(--surface);border:1px solid var(--line);border-radius:19px}
+.case-block h2{font-size:1.38rem;margin:0 0 14px;letter-spacing:-.025em}
+.case-block p{color:var(--muted)}
+.case-block p:last-child{margin-bottom:0}
+.case-sidebar{position:sticky;top:105px;padding:23px;border-radius:18px;background:var(--surface-alt);border:1px solid var(--line)}
+.case-sidebar h2{font-size:1.02rem;margin-bottom:12px}
+.case-sidebar .skill-list{margin:0 0 20px}
+.case-sidebar .button{width:100%;margin-bottom:10px;text-align:center}
+.case-photo{width:100%;max-height:560px;object-fit:contain;display:block;margin:auto;border-radius:13px}
+.case-photo-stage{background:var(--surface-alt);border-radius:14px;padding:12px;min-height:140px;display:grid;place-items:center}
+.case-photo-caption{font-size:.83rem;color:var(--muted);margin:10px 0 0}
+.case-photo-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.case-photo-controls button{background:var(--surface-alt);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 13px;cursor:pointer;min-height:44px}
+.case-photo-controls span{font-size:.86rem;color:var(--muted)}
+.case-bullets{padding-left:21px;margin-bottom:0;color:var(--muted);line-height:1.75}
+.case-empty{padding:30px;background:var(--surface);border:1px solid var(--line);border-radius:19px}
+@media(max-width:950px){.featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.case-layout{grid-template-columns:1fr}.case-sidebar{position:static}}
+@media(max-width:680px){.featured-grid,.archive-grid,.case-meta{grid-template-columns:1fr}.projects-page-hero{padding-top:35px}.case-block{padding:20px}.case-shell{width:min(100% - 36px,940px)}.case-photo-controls{flex-wrap:wrap}}

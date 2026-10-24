@@ -1679,5 +1679,28 @@
         "ig-f25139f2790585b4"
       ]
     }
+  ],
+  "featured_photos": [
+    {
+      "src": "photos/94f902d26f3cad42-01.jpg",
+      "thumb": "photos/thumbs/94f902d26f3cad42-01.webp",
+      "alt": "Photo set · 2025-03-21",
+      "title": "Photo set · 2025-03-21",
+      "post_id": "ig-94f902d26f3cad42"
+    },
+    {
+      "src": "photos/d59e65b2835d5805-01.jpg",
+      "thumb": "photos/thumbs/d59e65b2835d5805-01.webp",
+      "alt": "Looks like Europe, doesnât it?",
+      "title": "Looks like Europe, doesnât it?",
+      "post_id": "ig-d59e65b2835d5805"
+    },
+    {
+      "src": "photos/10e79ad95f3f66f6-04.jpg",
+      "thumb": "photos/thumbs/10e79ad95f3f66f6-04.webp",
+      "alt": "My best first portrait model.",
+      "title": "My best first portrait model.",
+      "post_id": "ig-10e79ad95f3f66f6"
+    }
   ]
 }

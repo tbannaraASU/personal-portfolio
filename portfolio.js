@@ -40,15 +40,30 @@
       inner=`<div class="skill-grid">${items.map(i=>`<div class="skill-group"><h3>${line(i.title)}</h3><div class="skill-list">${String(i.skills||'').split(',').map(x=>x.trim()).filter(Boolean).map(t=>`<span class="skill">${line(t)}</span>`).join('')}</div></div>`).join('')}</div>`;
     }else if(sec.kind==='projects'){
       projects.length=0;projects.push(...items);
-      const categories=[...new Set(items.flatMap(i=>tags(i.tags)))];
-      inner=`<div class="filters" role="group" aria-label="Filter projects"><button class="filter-button" type="button" data-filter="all" aria-pressed="true">All projects</button>${categories.map(t=>`<button class="filter-button" type="button" data-filter="${escapeHtml(t)}" aria-pressed="false">${line(t.replace(/-/g,' '))}</button>`).join('')}</div><p id="filter-summary" class="section-description" role="status" aria-live="polite">Showing all ${items.length} projects.</p><div class="projects-grid">${items.map((i,idx)=>{
+      // The admin's Featured flag wins. Older SQLite content uses a curated, non-AI fallback.
+      const flagged=items.filter(i=>i.featured==='Featured');
+      const prefer=['Personal Portfolio Website','Student Discussion Application','Studio XE'];
+      const fallback=prefer.map(name=>items.find(i=>String(i.title||'').includes(name))).filter(Boolean);
+      const featured=(flagged.length?flagged:[...fallback,...items.filter(i=>!fallback.includes(i)&&!String(i.title||'').toLowerCase().includes('personal ai'))]).slice(0,3);
+      inner=`<div class="projects-grid featured-grid">${featured.map(i=>{
+        const idx=items.indexOf(i);
         const theme=['violet','sage','blue','cream','peach','gray'].includes(i.theme)?i.theme:'peach';
-        return `<article class="project-card" data-project="${idx}" data-category="${escapeHtml(tags(i.tags).join(' '))}"><div class="project-banner ${theme}" aria-hidden="true">${line(i.banner||i.title)}</div><div class="project-body"><span class="status">${line(i.status)}</span><h3>${line(i.title)}</h3><p class="multiline">${line(i.summary)}</p><div class="project-meta">${line(i.period)}</div><button type="button" class="project-open" data-project="${idx}" aria-label="View details for ${line(i.title)}">View project details ↗</button></div></article>`;
-      }).join('')}</div>`;
+        const detailUrl=/^item-[a-z0-9]+$/i.test(i.id||'')?`project.html?id=${encodeURIComponent(i.id)}`:'projects.html';
+        return `<article class="project-card" data-project="${idx}"><div class="project-banner ${theme}" aria-hidden="true">${line(i.banner||i.title)}</div><div class="project-body"><span class="status">${line(i.status)}</span><h3>${line(i.title)}</h3><p class="multiline">${line(i.summary)}</p><div class="project-meta">${line(i.period)}</div><div class="project-card-actions"><button type="button" class="project-open" data-project="${idx}" aria-label="Quick view ${line(i.title)}">Quick view</button><a class="project-link" href="${escapeHtml(detailUrl)}">Read case study →</a></div></div></article>`;
+      }).join('')}</div><div class="view-all-projects"><a class="button button-primary" href="projects.html">View all projects →</a><span>${items.length} published projects · Filter by topic on the next page</span></div>`;
     }else if(sec.kind==='experience'){
       inner=`<div class="timeline">${items.map(i=>`<article class="timeline-item"><small>${line(i.label)}</small><h3>${line(i.title)}</h3><div class="date">${line(i.period)}</div><p class="multiline">${line(i.body)}</p></article>`).join('')}</div>`;
     }else if(sec.kind==='photography'){
-      inner=`${items.map(i=>`<div class="panel interests-panel"><div class="camera-icon" aria-hidden="true">📷</div><div class="photography-intro"><h3>${line(i.title)}</h3><p class="multiline">${line(i.body)}</p>${link(i.link||'photography.html',i.link_label||'View photography gallery','button button-primary photography-cta')}</div></div>`).join('')}`;
+      // Show just the Admin-selected photographs above a gallery link.
+      // No content or Featured Photo selections are changed in Local Admin.
+      const featuredPhotos=(window.PORTFOLIO_GALLERY?.featured_photos||[]).slice(0,3);
+      const imgUrl=src=>/^photos\/[a-zA-Z0-9_-]+\.(?:jpg|jpeg|png|webp)$/i.test(src||'')||/^photos\/thumbs\/[a-zA-Z0-9_-]+\.webp$/i.test(src||'')?src:'';
+      const cards=featuredPhotos.map(p=>{
+        const thumb=imgUrl(p.thumb)||imgUrl(p.src),original=imgUrl(p.src);
+        if(!thumb||!original)return '';
+        return `<a class="featured-photo" href="photography.html" aria-label="Explore photography: ${line(p.title)}"><img src="${escapeHtml(thumb)}" data-full-src="${escapeHtml(original)}" alt="${line(p.alt)}" loading="lazy" decoding="async" width="640" height="640"><span>${line(p.title)}</span></a>`;
+      }).filter(Boolean).join('');
+      inner=`${cards?`<div class="featured-photo-grid" aria-label="Featured photographs">${cards}</div>`:''}<div class="photography-view-more"><a class="button button-primary" href="photography.html">See More Photos →</a></div>`;
     }else if(sec.kind==='contact'){
       const introductory=items.filter(x=>x.type==='intro');const links=items.filter(x=>x.type!=='intro');
       inner=`<div class="panel contact-panel"><div>${introductory.map(i=>`<h3>${line(i.title)}</h3><p class="multiline">${line(i.body)}</p>`).join('')}</div><div class="actions">${links.map(i=>link(i.link,i.title)).join('')}</div></div>`;
@@ -57,6 +72,12 @@
     }
     return `<section class="shell section" id="${escapeHtml(sec.id)}">${intro(sec)}${inner}</section>`;
   }
+  host.addEventListener('error',event=>{
+    const img=event.target;
+    if(img?.tagName==='IMG'&&img.dataset.fullSrc&&img.src!==new URL(img.dataset.fullSrc,location.href).href){
+      img.src=img.dataset.fullSrc;
+    }
+  },true);
   host.innerHTML=data.filter(s=>s.enabled&&s.kind!=='footer').map(s=>s.kind==='hero'?hero(s):content(s)).join('') || '<div class="shell section"><p>No published content yet.</p></div>';
   const names={about:'About',skills:'Skills',projects:'Projects',experience:'Experience',photography:'Photography',contact:'Contact'};
   nav.innerHTML=data.filter(s=>s.enabled&&!['hero','footer'].includes(s.kind)).map(s=>`<a href="#${escapeHtml(s.id)}">${line(names[s.kind]||s.title)}</a>`).join('');
@@ -101,7 +122,8 @@
     if(p.demo_url)urls.push([p.demo_url,'Live demo']);
     if(p.link&&!urls.some(x=>x[0]===p.link))urls.push([p.link,p.link_label||'Project link']);
     const links=urls.map(([url,label])=>link(url,label,'button button-secondary')).filter(Boolean).join('');
-    modalBody.innerHTML=`<div class="project-header"><span class="status">${line(p.status||'Project')}</span><h2 id="project-dialog-title">${line(p.title)}</h2><p class="project-dialog-intro multiline">${line(p.summary)}</p></div>${galleryHtml}${metadataHtml}<section class="project-block"><h3>About this project</h3><p class="multiline">${line(p.details||p.summary)}</p></section>${highlightsHtml}${skillHtml}${links?`<div class="actions project-links">${links}</div>`:''}`;
+    const caseStudyLink=/^item-[a-z0-9]+$/i.test(p.id||'')?`<a class="button button-primary" href="project.html?id=${encodeURIComponent(p.id)}">Read full case study →</a>`:'';
+    modalBody.innerHTML=`<div class="project-header"><span class="status">${line(p.status||'Project')}</span><h2 id="project-dialog-title">${line(p.title)}</h2><p class="project-dialog-intro multiline">${line(p.summary)}</p></div>${galleryHtml}${metadataHtml}<section class="project-block"><h3>About this project</h3><p class="multiline">${line(p.details||p.summary)}</p></section>${highlightsHtml}${skillHtml}${links||caseStudyLink?`<div class="actions project-links">${caseStudyLink}${links}</div>`:''}`;
     modal.showModal();
     const prev=modalBody.querySelector('#project-image-prev'),next=modalBody.querySelector('#project-image-next');
     if(prev)prev.onclick=()=>setGalleryImage(galleryIndex-1);

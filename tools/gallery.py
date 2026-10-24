@@ -331,7 +331,28 @@ def build():
             cover = album['cover_post_id'] if album['cover_post_id'] in ids else ids[0]
             albums.append({'id':album['id'],'title':album['title'],'description':album['description'],
                            'cover_post_id':cover,'post_ids':ids})
-    content = {'account':'foto_4th','posts':collection,'albums':albums}
+    # Public selection only contains images still present in published photo sets.
+    published_photos = {
+        photo['src']: (post, photo)
+        for post in collection for photo in post['photos']
+    }
+    featured = []
+    with db_connect() as con:
+        chosen = con.execute('SELECT photo_path FROM featured_photos ORDER BY position, photo_path LIMIT 3').fetchall()
+    for (path,) in chosen:
+        matched = published_photos.get(path)
+        if not matched: continue
+        post, photo = matched
+        name = Path(path).stem + '.webp'
+        thumb = 'photos/thumbs/' + name
+        featured.append({
+            'src': path, 'thumb': thumb if (ROOT / thumb).is_file() else path,
+            'alt': photo['alt'] or post['title'] or 'Photograph',
+            'title': post['title'] or 'Photography', 'post_id': post['id']
+        })
+    if rows and not collection:
+        raise RuntimeError('Database contains photo sets, but their original images are missing. Refusing to overwrite public gallery with empty data.')
+    content = {'account':'foto_4th','posts':collection,'albums':albums,'featured_photos':featured}
     data = ROOT / 'data'
     data.mkdir(exist_ok=True)
     rendered = json.dumps(content,ensure_ascii=False,indent=2)

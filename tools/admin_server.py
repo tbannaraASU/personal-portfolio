@@ -21,7 +21,7 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 import sqlite3
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 sys.path.insert(0, str(Path(__file__).parent))
 from gallery import ROOT, db_connect, build, store_post, tags_from_caption, safe_image_write, valid_permalink, clean_title
@@ -166,6 +166,22 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(cms.dump())
         if path=='/api/posts':
             return self._json({'posts':all_posts()})
+        if path=='/api/featured-photos':
+            with db_connect() as con:
+                con.row_factory = sqlite3.Row
+                items = con.execute('''SELECT ph.path, ph.alt_text, po.title
+                    FROM photos ph JOIN posts po ON po.id=ph.post_id
+                    ORDER BY po.published_at DESC, po.id, ph.position''').fetchall()
+                selected = [r[0] for r in con.execute(
+                    'SELECT photo_path FROM featured_photos ORDER BY position, photo_path')]
+            photos = []
+            for img in items:
+                path = img['path']
+                if not (ROOT / path).is_file(): continue
+                thumb = 'photos/thumbs/' + Path(path).stem + '.webp'
+                photos.append({'path':path,'preview':thumb if (ROOT/thumb).is_file() else path,
+                               'title':img['title'],'alt':img['alt_text']})
+            return self._json({'photos':photos,'selected':selected,'limit':3})
         if path=='/api/albums':
             return self._json({'albums':all_albums()})
         if path=='/api/tags':
@@ -184,6 +200,59 @@ class Handler(SimpleHTTPRequestHandler):
             if body_length<=0 or body_length>MAX_BODY:
                 raise ValueError('Upload too large (max 80 MB per request).')
             path=urlsplit(self.path).path
+            if path=='/api/featured-photos/save':
+                req = json.loads(self.rfile.read(body_length).decode('utf8'))
+                paths = req.get('paths') if isinstance(req,dict) else None
+                if not isinstance(paths,list) or len(paths)>3 or any(not isinstance(p,str) for p in paths):
+                    raise ValueError('Select up to 3 photos.')
+                if len(set(paths))!=len(paths):
+                    raise ValueError('Each featured photo must be unique.')
+                with db_connect() as con:
+                    available = {row[0] for row in con.execute('SELECT path FROM photos')}
+                    if any(p not in available or not (ROOT/p).is_file() for p in paths):
+                        raise ValueError('Featured photo selection contains an unavailable original image.')
+                    con.execute('DELETE FROM featured_photos')
+                    for position, photo_path in enumerate(paths):
+                        con.execute('INSERT INTO featured_photos(photo_path,position) VALUES(?,?)',(photo_path,position))
+                    con.commit()
+                build()
+                return self._json({'ok':True,'selected':paths})
+            if path=='/api/portfolio/upload-image':
+                ctype=self.headers.get('Content-Type','')
+                if not ctype.startswith('multipart/form-data;'):
+                    raise ValueError('Expected multipart image upload.')
+                raw=b'Content-Type: '+ctype.encode('utf8')+b'\r\nMIME-Version: 1.0\r\n\r\n'+self.rfile.read(body_length)
+                msg=BytesParser(policy=default).parsebytes(raw)
+                if not msg.is_multipart():raise ValueError('Invalid image upload.')
+                prepared=[]
+                for part in msg.iter_parts():
+                    if part.get_content_disposition()!='form-data' or part.get_param('name',header='content-disposition')!='images':continue
+                    filename=part.get_filename() or ''
+                    suffix=Path(filename).suffix.lower()
+                    if suffix not in ALLOWED:raise ValueError('Only JPG, PNG, or WebP images are supported.')
+                    blob=part.get_payload(decode=True) or b''
+                    if not blob or len(blob)>10*1024*1024:raise ValueError('Each image must be under 10 MB.')
+                    try:
+                        with Image.open(io.BytesIO(blob)) as src:
+                            src.verify()
+                        with Image.open(io.BytesIO(blob)) as src:
+                            src=ImageOps.exif_transpose(src)
+                            src.thumbnail((2200,2200))
+                            if src.mode not in {'RGB','RGBA'}:src=src.convert('RGBA' if 'A' in src.getbands() else 'RGB')
+                            buffer=io.BytesIO()
+                            src.save(buffer,format='WEBP',quality=84,method=6)
+                            prepared.append(buffer.getvalue())
+                    except (OSError,ValueError,Image.DecompressionBombError) as e:
+                        raise ValueError('Could not read one uploaded image.') from e
+                    if len(prepared)>6:raise ValueError('Upload at most 6 photos at once.')
+                if not prepared:raise ValueError('Choose at least one image.')
+                folder=ROOT/'project-images';folder.mkdir(exist_ok=True)
+                paths=[]
+                for image_bytes in prepared:
+                    name='project-'+uuid4().hex+'.webp'
+                    (folder/name).write_bytes(image_bytes)
+                    paths.append('project-images/'+name)
+                return self._json({'ok':True,'paths':paths})
             if path.startswith('/api/portfolio/'):
                 req=json.loads(self.rfile.read(body_length).decode('utf8'))
                 if not isinstance(req,dict):

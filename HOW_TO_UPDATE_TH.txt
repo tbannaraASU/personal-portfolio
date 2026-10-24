@@ -1,0 +1,48 @@
+PORTFOLIO V8 — คู่มือภาษาไทย
+
+หน้าใหม่ที่ได้:
+- photography.html : แสดงการ์ด Hashtag / Albums ไม่แสดงรูปทุก Tag พร้อมกัน
+- tag.html?tag=%23filmphotography : หน้าเฉพาะของ #filmphotography
+- album.html?id=film-stories : หน้าเฉพาะของ Album
+- /admin : จัดการทั้งรูป อัลบั้ม และ Hashtag
+
+สำคัญมาก: หากเคยเพิ่มรูปบน Mac ด้วย Admin V6 แล้ว ห้ามคัดลอกไฟล์
+local/gallery.sqlite จาก ZIP ไปทับไฟล์เดิม เพราะข้อมูลที่คุณเพิ่มเองอาจหาย
+ให้สำรองไฟล์ database เดิมไว้ก่อนด้วย
+
+วิธีอัปเกรด:
+1. เข้า ~/ASU/Capstone/GitHub_Competency_Starter
+2. ตรวจ git status; commit หรือ backup งานที่ยังไม่ commit
+3. git switch main ; git pull origin main ; git switch -c feature/album-tag-pages
+4. แตก ZIP V8 แล้วคัดลอกไฟล์ HTML/CSS/JS, README, และ tools/
+   **ไม่คัดลอก local/gallery.sqlite ทับไฟล์เดิม**
+   ถ้ามีรูปใหม่ใน photos/ ให้รักษาไฟล์เดิมไว้
+5. source .venv/bin/activate
+6. python tools/gallery.py seed-albums  (ถ้าต้องการสร้าง Album เริ่มต้นตาม Tag จริง)
+7. python tools/gallery.py build
+8. ถ้า server เก่ายังเปิดอยู่ กด Control+C แล้วเปิดใหม่:
+   python tools/admin_server.py
+9. เปิด http://127.0.0.1:8765/photography.html
+10. เปิด http://127.0.0.1:8765/admin
+
+เพิ่ม Album:
+- Album manager > Create new album > ใส่ชื่อ > ติ๊ก Photo Sets > เลือกปก > Save
+- เลือก Album เดิมเพื่อแก้ไข/เปลี่ยนชื่อ/เปลี่ยนรูป > Save album
+- Delete album ไม่ลบรูปภาพ
+
+แก้ Tag:
+- Tag manager > Select hashtag > Rename / merge หรือ Delete
+- การ Rename เป็น Tag ที่มีอยู่แล้วจะรวม Tag เข้าด้วยกัน
+- การลบ Tag ไม่ลบรูปหรือแก้ Caption ของ Instagram
+
+เพิ่มรูป:
+- New photo set > เลือกรูป > ใส่ Caption/Hashtags > เลือก Albums > Add photo set
+- รูปใหม่จะเข้าแท็กที่ใส่ และ Album ที่ติ๊กทันทีในเว็บไซต์ Local
+
+เผยแพร่รูปและหน้าใหม่ขึ้น GitHub Pages:
+- git add index.html photography.html tag.html album.html photography.js photography.css tools/ data/ photos/ README.md .gitignore
+- git commit -m "Add tag pages and photo albums"
+- git push -u origin feature/album-tag-pages
+- เปิด Pull Request และ Merge เข้า main
+
+ไม่ต้องเช่า Server: SQLite ใช้เฉพาะ Mac ส่วน GitHub Pages อ่านไฟล์ JSON ที่สร้างจาก SQLite

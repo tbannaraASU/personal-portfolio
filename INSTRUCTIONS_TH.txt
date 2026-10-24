@@ -1,0 +1,37 @@
+PORTFOLIO V2 — คู่มือสำหรับ Mac
+===============================
+
+ไฟล์นี้เป็นเวอร์ชันใหม่สำหรับนำไปแทน index.html และ README.md ใน Repo เดิม
+อย่าแก้ Repo บน GitHub โดยไม่ตรวจสอบไฟล์ในเครื่องก่อน
+
+1) เปิด Terminal และเข้าโฟลเดอร์โปรเจกต์ของคุณ
+   cd ~/ASU/Capstone/GitHub_Competency_Starter
+
+2) อัปเดต main และสร้าง branch ใหม่
+   git switch main
+   git pull origin main
+   git switch -c feature/portfolio-v2
+
+3) คัดลอกไฟล์ index.html และ README.md จาก ZIP นี้ไปแทนไฟล์เดิมในโฟลเดอร์โปรเจกต์
+   ถ้าใช้ Finder ให้ลากไฟล์ไปวางแล้วเลือก Replace
+
+4) ทดสอบบน Mac
+   open index.html
+   - ลองคลิก Dark mode และ Light mode
+   - รีเฟรชเว็บ ดูว่าโหมดที่เลือกยังอยู่หรือไม่
+   - ลองกดลิงก์ About, Projects, Contact และ GitHub
+   - ย่อหน้าต่าง Chrome ให้แคบเพื่อดู layout บนมือถือ
+   - ตรวจข้อความที่ต้องปรับให้เป็นข้อมูลของตัวเอง
+
+5) Commit และ Push หลังจากทดสอบเรียบร้อย
+   git status
+   git add index.html README.md
+   git commit -m "Improve portfolio design and add theme toggle"
+   git push -u origin feature/portfolio-v2
+
+6) เปิด GitHub > Pull requests > New pull request
+   base: main
+   compare: feature/portfolio-v2
+   จากนั้น Review และ Merge
+
+หมายเหตุ: อย่าอ้างว่าได้พัฒนา ทดสอบ หรือ Merge เวอร์ชันใหม่จนกว่าจะทำจริง

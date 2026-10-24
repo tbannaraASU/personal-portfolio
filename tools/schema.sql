@@ -43,3 +43,9 @@ CREATE TABLE IF NOT EXISTS album_posts (
   PRIMARY KEY (album_id, post_id)
 );
 CREATE INDEX IF NOT EXISTS idx_album_posts_post ON album_posts(post_id);
+
+-- Featured individual images for the homepage, ordered by position. Paths are stable across post metadata edits.
+CREATE TABLE IF NOT EXISTS featured_photos (
+  photo_path TEXT PRIMARY KEY,
+  position INTEGER NOT NULL DEFAULT 0
+);
